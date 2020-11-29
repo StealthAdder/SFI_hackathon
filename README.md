@@ -1,2 +1,7 @@
-# SFI_hackathon
-Blockchain in Education: Decentralized Database for Degree 
+Team: GenXcoders  
+
+#Team-Leader: Mohammed Imran Mohsin 
+#Team: 24
+
+Topic: Blockchain in Education: Decentralized Degree Database
+
