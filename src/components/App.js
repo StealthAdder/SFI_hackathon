@@ -90,13 +90,24 @@ class App extends Component {
   render() {
     var conditional = <p>Submit a PDF</p>
     if(this.state.degreeHash != ''){
-      conditional = <a
-        href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <button className="btn btn-primary btn-sm">View</button>
-      </a>
+      conditional = <div>
+          <a
+            href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          > </a>
+            <h3>Click on the Link or the Button to view the Document</h3>
+            <hr></hr>
+            <button className="btn btn-primary btn-sm">View</button>
+            <hr></hr>
+            <h3>OR</h3>
+            <hr></hr>
+            <a href="{`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}"
+               target="_blank"
+            >
+              {`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
+            </a>
+        </div>
     }
     return (
       <div>
@@ -124,6 +135,8 @@ class App extends Component {
                   {/* <input type='text' placeholder="Student Name" required/>
                   <input type='text' placeholder="Student Hash" required/> */}
                   <input type='submit' />
+                  <hr></hr>
+                  <a href="javascript:history.go(0)">Click to refresh the page</a>
                 </form>
               </div>
             </main>
