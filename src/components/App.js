@@ -145,7 +145,7 @@ class App extends Component {
                   <input type='text' placeholder="Student Hash" required/> */}
                   <input type='submit' />
                   <hr></hr>
-                  {done}
+                  <a href="javascript:history.go(0)">Click to refresh the page</a>
                 </form>
               </div>
             </main>

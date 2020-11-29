@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract Degree {
+contract Univ {
     
     address public ownerAddress = 0x049bB561227Ace1c8dFED55C4E9386cCb6D63702;
     
