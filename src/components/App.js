@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import './App.css';
 import Degree from '../abis/Degree.json'
 
 const ipfsClient = require('ipfs-http-client')
@@ -38,6 +37,7 @@ class App extends Component {
       this.setState({ contract })
       const degreeHash = await contract.methods.get().call()
       this.setState({ degreeHash })
+      this.setState({ buffer: false })
     } else {
       window.alert('Smart contract not deployed to detected network.')
     }
@@ -53,7 +53,8 @@ class App extends Component {
       contract: null,
       web3: null,
       buffer: null,
-      account: null
+      account: null,
+      confirm: true
     }
   }
 
@@ -84,41 +85,49 @@ class App extends Component {
       }
       // UNCOMMENT THIS ONCE U ADD THE FIELDS
        this.state.contract.methods.set(result[0].hash).send({ from: this.state.account })
+       this.state.contract.methods.get().call().then(
+        this.setState({ confirm: true }))
+      //  this.setState({ degreeHash: result[0].hash })
     })
   }
 
   render() {
     var conditional = <p>Submit a PDF</p>
+    var done = <p></p>
     if(this.state.degreeHash != ''){
       conditional = <div>
+          <h3>Click on the Link or the Button to view the Document</h3>
+          <hr></hr>
           <a
             href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
             target="_blank"
             rel="noopener noreferrer"
-          > </a>
-            <h3>Click on the Link or the Button to view the Document</h3>
-            <hr></hr>
+          > 
             <button className="btn btn-primary btn-sm">View</button>
+          </a>
             <hr></hr>
             <h3>OR</h3>
             <hr></hr>
-            <a href="{`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}"
+            <a href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
                target="_blank"
             >
               {`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
             </a>
         </div>
+
+      if(this.state.confirm == true){
+        done = <a href="javascript:history.go(0)">Click to refresh the page</a>         
+      }
     }
     return (
       <div>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href=""
-            target="_blank"
+            href="#"
             rel="noopener noreferrer"
           >
-            University
+            {this.state.account}
           </a>
         </nav>
         <div className="container-fluid mt-5">
@@ -136,13 +145,14 @@ class App extends Component {
                   <input type='text' placeholder="Student Hash" required/> */}
                   <input type='submit' />
                   <hr></hr>
-                  <a href="javascript:history.go(0)">Click to refresh the page</a>
+                  {done}
                 </form>
               </div>
             </main>
           </div>
         </div>
       </div>
+
     );
   }
 }

@@ -9173,12 +9173,11 @@
       "events": {},
       "links": {},
       "address": "0x86003157444E8A371e520fcFe6145bf68ACeFa58",
-      "transactionHash": "0x2d91eefce7b66c8a6c8e5001c8ff69b0c8ee40986800768e15d32770791f1364"
+      "transactionHash": "0xca5a2fbf708df49db6f9ba0a32c15ba123dbde9cda0c9d75dde2bc7588ec84c9"
     }
   },
   "schemaVersion": "3.2.5",
-  "updatedAt": "2020-11-29T05:59:57.908Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-11-29T08:17:40.681Z",
   "devdoc": {
     "methods": {}
   },
