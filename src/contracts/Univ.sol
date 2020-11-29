@@ -2,6 +2,8 @@ pragma solidity ^0.5.0;
 
 contract Degree {
     
+    address public ownerAddress = 0x049bB561227Ace1c8dFED55C4E9386cCb6D63702;
+    
     struct StudentDetails {
         uint id;
         string name;
@@ -113,7 +115,7 @@ contract Degree {
         }
     }
     
-    function getarr(address _addressid,uint _degreeID) public view returns (uint ret){
+    function getarr(address _addressid) public view returns (uint ret){
         uint _degreeID = uint(degreelist[_addressid].degreeIDlength)-1;
         return degreelist[_addressid].degreeID[_degreeID];
     }
@@ -138,17 +140,15 @@ contract Degree {
     }
 
     function admission(string memory _name, address _addressid) public {
-        if(!registeredStudent[_addressid]){
+        if(!registeredStudent[_addressid] && ownerAddress==msg.sender){
             studentCounts++;
             studentdetail_address[_addressid] = StudentDetails(degreeCounts,_name,_addressid);
             registeredStudent[_addressid]=true;
         }
     }
     
-    // function sharingdocs(string )
-    
     function upload (string memory _degree_name, string memory _year, string memory _ipfsHash, address _addressid, string memory _orig_ipfsHASH) public{
-        if(registeredStudent[_addressid]){
+        if(registeredStudent[_addressid] && ownerAddress==msg.sender ){
             if(!degreeCompleted[_addressid]){
                 degreeCounts ++;
                 getdegreeIDarr(_addressid,degreeCounts);
