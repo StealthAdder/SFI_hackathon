@@ -1,5 +1,5 @@
-const Degree = artifacts.require("Degree");
+const Storage = artifacts.require("Storage");
 
 module.exports = function(deployer) {
-    deployer.deploy(Degree);
+    deployer.deploy(Storage);
 };

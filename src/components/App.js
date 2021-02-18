@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import Degree from '../abis/Degree.json'
+import Degree from '../abis/Storage.json'
 
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
@@ -27,6 +27,7 @@ class App extends Component {
 
   async loadBlockchainData() {
     const web3 = window.web3
+
     // Load account
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
@@ -48,8 +49,6 @@ class App extends Component {
 
     this.state = {
       degreeHash: '',
-      studentname: '',
-      studenthash: '',
       contract: null,
       web3: null,
       buffer: null,
@@ -60,6 +59,7 @@ class App extends Component {
 
   captureFile = (event) => {
     event.preventDefault()
+    console.log(event.target.files.length)
     const file = event.target.files[0]
     const reader = new window.FileReader()
     reader.readAsArrayBuffer(file)
@@ -72,10 +72,6 @@ class App extends Component {
   onSubmit = (event) => {
     event.preventDefault()
 
-    // NEED TO READ TWO INPUTE FIELDS AS StduentName and StudentHash
-    // studentName = 
-    // hashID = 
-
     console.log("Submitting file to ipfs...")
     ipfs.add(this.state.buffer, (error, result) => {
       console.log('Ipfs result', result)
@@ -83,7 +79,6 @@ class App extends Component {
         console.error(error)
         return
       }
-      // UNCOMMENT THIS ONCE U ADD THE FIELDS
        this.state.contract.methods.set(result[0].hash).send({ from: this.state.account })
        this.state.contract.methods.get().call().then(
         this.setState({ confirm: true }))
@@ -92,14 +87,15 @@ class App extends Component {
   }
 
   render() {
-    var conditional = <p>Submit a PDF</p>
+    var conditional = <p>Submit a Document/Image</p>
     var done = <p></p>
-    if(this.state.degreeHash != ''){
+    if(this.state.degreeHash !== ''){
       conditional = <div>
           <h3>Click on the Link or the Button to view the Document</h3>
           <hr></hr>
           <a
             href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
+            onClick={this.documentloading}
             target="_blank"
             rel="noopener noreferrer"
           > 
@@ -110,6 +106,7 @@ class App extends Component {
             <hr></hr>
             <a href={`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
                target="_blank"
+               rel="noopener noreferrer"
             >
               {`https://ipfs.infura.io/ipfs/${this.state.degreeHash}`}
             </a>
@@ -119,6 +116,7 @@ class App extends Component {
         done = <a href="javascript:history.go(0)">Click to refresh the page</a>         
       }
     }
+     // eslint-disable-next-line
     return (
       <div>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -137,12 +135,10 @@ class App extends Component {
                 {conditional}
                 
                 <p>&nbsp;</p>
-                <h2>Upload Degree</h2>
+                <h2>Upload a File</h2>
                 <p>&nbsp;</p>
                 <form onSubmit={this.onSubmit} >
-                  <input type='file' onChange={this.captureFile} />
-                  {/* <input type='text' placeholder="Student Name" required/>
-                  <input type='text' placeholder="Student Hash" required/> */}
+                  <input type='file' onChange={this.captureFile} multiple/>
                   <input type='submit' />
                   <hr></hr>
                   <a href="javascript:history.go(0)">Click to refresh the page</a>
@@ -152,7 +148,6 @@ class App extends Component {
           </div>
         </div>
       </div>
-
     );
   }
 }

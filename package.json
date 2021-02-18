@@ -39,5 +39,14 @@
   ],
   "main": "truffle-config.js",
   "devDependencies": {},
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mims1234/SFI_hackathon.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/mims1234/SFI_hackathon/issues"
+  },
+  "homepage": "https://github.com/mims1234/SFI_hackathon#readme"
 }
